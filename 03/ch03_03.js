@@ -37,3 +37,22 @@ const startDate = moment();
 const endDate = moment("2025-12-25");
 const diffDay = endDate.diff(startDate, "days");
 console.log("크리스마스까지 남은 날", startDate, endDate, diffDay);
+
+//
+require("moment/locale/ko"); //한국어 로케일 불러오기
+moment.locale("ko"); // 한국어 로케일 설정
+const s3 = moment();
+console.log(`요일${s3.format("d")}`);
+console.log(`요일${s3.format("dd")}`);
+console.log(`요일${s3.format("ddd")}`);
+console.log(`요일${s3.format("dddd")}`);
+
+//올해 크리스마스는 무슨 요일 일까요?
+require("moment/locale/ko");
+moment.locale("ko");
+const s4 = moment("2025-12-25");
+console.log(`크리스마스${s4.format("dddd")}`);
+
+//자신의 태어날 날의 요일 출력
+const s5 = moment("1982-06-29");
+console.log(`태어난날${s5.format("dddd")}`);
