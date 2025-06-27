@@ -1,5 +1,8 @@
 const path = require("path");
 const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+
 const noteRouter = require("./routes/notes");
 const todoRouter = require("./routes/todos");
 const postRouter = require("./routes/posts");
@@ -8,12 +11,18 @@ const authRouter = require("./routes/auth");
 const models = require("./models");
 const app = express();
 const { logger, logging } = require("./middlewares/logger");
+
 // 미들웨어  설정
 app.use(logging); // 로깅 미들웨어
 app.use(express.json()); // json 파싱 미들웨어
 app.use(express.urlencoded({ extended: true }));
 const uploadDir = `public/uploads`;
 app.use(`/downloads`, express.static(path.join(__dirname, uploadDir)));
+// 스웨거 설정
+// swagger.yaml 파일에서 문서 로딩
+const swaggerDocument = YAML.load(path.join(__dirname, "swagger.yaml"));
+// http://localhost:3000/api-docs 에서 스웨거를 서비스 해주세요
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // notes url 로 들어오는 주소는 전부 noteRouter 처리
 app.use("/notes", noteRouter);
